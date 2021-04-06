@@ -9,7 +9,7 @@ const App = () => {
       <h1>Tree Test</h1>
       <div style={{ margin: "10px" }}>
         <QueryClientProvider client={queryClient}>
-          <TreeProvider>
+          <TreeProvider page="tree">
             <Tree />
           </TreeProvider>
         </QueryClientProvider>

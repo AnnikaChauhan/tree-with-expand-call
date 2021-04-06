@@ -8,7 +8,7 @@ const ROOT_ID = "";
 
 export const TreeContext = createContext({});
 
-export const TreeProvider = ({ children }) => {
+export const TreeProvider = ({ page, children }) => {
   const [data, setData] = useState([]);
   const [expandedRowIds, setExpandedRowIds] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ export const TreeProvider = ({ children }) => {
 
   //
   // OPTION TWO - based on theirs, this works and I've added a custom refetch thing - refetch is OPTIONAL
-  const loadData = (refetch) => {
+  const loadTreeData = (refetch) => {
     const rowIdsWithNotLoadedChilds = [ROOT_ID, ...expandedRowIds].filter(
       (rowId) => data.findIndex((row) => row.parentId === rowId) === -1
     );
@@ -75,12 +75,12 @@ export const TreeProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!loading) {
-      loadData(false);
+    if (!loading && page === "tree") {
+      loadTreeData(false);
     }
   });
 
-  const refetchAll = () => loadData(true);
+  const refetchAll = () => page === "tree" && loadTreeData(true);
 
   //
   // OPTION THREE - this half works but it keeps multiplying the data?? this uses the principle I used for Sim
